@@ -1,3 +1,4 @@
+# This project is largely inspired by Eddie Sharick
 # This is the main driver file. It is responsible for handling user input and displaying the current GameState object
 
 import pygame as p
