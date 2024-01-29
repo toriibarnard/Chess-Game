@@ -35,7 +35,7 @@ def main():
     running = True
     sqSelected = () #no square selected initially, keep track of the last click of the user (tuple: (row,col)
     playerClicks = [] #keep track of player clicks (two tuples: [(6,4), (4,4)])
-    while running:
+    while running: #game loop
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
@@ -54,12 +54,13 @@ def main():
                 if len(playerClicks) == 2: #after second click
                     move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board)
                     print(move.getChessNotation())
-                    if move in validMoves:
-                        gs.makeMove(move)
-                        moveMade = True
-                        sqSelected = () #reset user clicks
-                        playerClicks = [] #clear playerclicks
-                    else:
+                    for i in range(len(validMoves)):
+                        if move == validMoves[i]:
+                            gs.makeMove(validMoves[i])
+                            moveMade = True
+                            sqSelected = () #reset user clicks
+                            playerClicks = [] #clear playerclicks
+                    if not moveMade:
                         playerClicks = [sqSelected]
             #key handler
             elif e.type == p.KEYDOWN:
