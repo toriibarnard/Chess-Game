@@ -34,7 +34,7 @@ def main():
     gs = ChessEngine.GameState()
     validMoves = gs.getValidMoves()
     moveMade = False # flag variable for when a move is made
-    aniamte = False # flag variable for when a move should be animated
+    animate = False # flag variable for when a move should be animated
     print(gs.board)
     loadImages() # only do this once, and before the loop
     running = True
@@ -91,11 +91,22 @@ def main():
             animate = False
 
         drawGameState(screen, gs, validMoves, squareSelected) # draw current state of the game on the screen
+
+        if gs.checkMate:
+            gameOver = True
+            if gs.whiteToMove:
+                drawText(screen, 'You Lost!')
+            else:
+                drawText(screen, 'Well Played!')
+        elif gs.staleMate:
+            gameOver = True
+            drawText(screen, 'StaleMate')
+
         clock.tick(MAX_FPS) # limit framerate to max fps
         p.display.flip() # update display
 
 '''
-Responsible for all graphics within current gamestate
+Responsible for all graphics within current gameState
 '''
 def drawGameState(screen, gs, validMoves, squareSelected):
     drawBoard(screen) # draw squares on the board
@@ -169,6 +180,16 @@ def animateMove(move, screen, board, clock):
         p.display.flip()
         clock.tick(60)
 
+'''
+Draw text animation
+'''
+def drawText(screen, text):
+    font = p.font.SysFont("Helvitca", 50, True, False)
+    textObject = font.render(text, 0, p.Color('Black'))
+    textLocation = p.Rect(0, 0, WIDTH, HEIGHT).move(WIDTH/2 - textObject.get_width()/2, HEIGHT/2 - textObject.get_height()/2)
+    screen.blit(textObject, textLocation)
+    textObject = font.render(text, 0, p.Color('DarkGray'))
+    screen.blit(textObject, textLocation.move(2, 2))
 
 # run the game
 main()
