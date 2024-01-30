@@ -151,9 +151,6 @@ class GameState():
 
     # method to generate all moves considering checks
     def getValidMoves(self):
-        for log in self.castleRightsLog:
-            print(log.wks, log.wqs, log.bks, log.bqs, end=" ")
-        print()
         # preserve original value of enpassantPossible before modification
         tempEnpassantPossible = self.enpassantPossible
         # preserve original value of CastleRights before modification
@@ -173,9 +170,9 @@ class GameState():
             self.whiteToMove = not self.whiteToMove # making a move always switches the turn, so we have to switch it back before calling inCheck
             if self.inCheck():
                 moves.remove(moves[i])
-        # 5) if they do attack your king, its not a valid move
             self.whiteToMove = not self.whiteToMove
             self.undoMove()
+            # 5) if they do attack your king, its not a valid move
         if len(moves) == 0: # either checkmate or stalemate
             if self.inCheck():
                 self.checkMate = True
