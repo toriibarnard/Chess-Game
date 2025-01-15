@@ -34,7 +34,9 @@ class GameState():
         self.castleRightsLog = [CastleRights(self.currentCastlingRights.wks, self.currentCastlingRights.bks,
                                              self.currentCastlingRights.wqs, self.currentCastlingRights.bqs)]
     
-    # method to execute a move, doesn't work for enpassant, castling, or pawn promotion
+    '''
+    Method to execute a move, doesn't work for enpassant, castling, or pawn promotion
+    '''
     def makeMove(self, move):
         # update the with the piece moved and the destination square
         self.board[move.startRow][move.startCol] = "--"
@@ -80,8 +82,9 @@ class GameState():
         self.castleRightsLog.append(CastleRights(self.currentCastlingRights.wks, self.currentCastlingRights.bks,
                                                  self.currentCastlingRights.wqs, self.currentCastlingRights.bqs))
 
-
-    # method to undo the last move
+    '''
+    Method to undo the last move
+    '''
     def undoMove(self):
         if len(self.moveLog) != 0: # make sure there is a move to undo
             move = self.moveLog.pop()
@@ -121,8 +124,9 @@ class GameState():
                     # delete the new rook
                     self.board[move.endRow][move.endCol+1] = '--'
 
-
-    # method to update castle rights given the move
+    '''
+    Method to update castle rights given the move
+    '''
     def updateCastleRights(self, move):
         # if white king is moved, white king loses both castling rights
         # queen side is left side (col 0) and king side is right side (col 7)
@@ -148,8 +152,9 @@ class GameState():
                 elif move.startCol == 7: # right rook
                     self.currentCastlingRights.bks = False
 
-
-    # method to generate all moves considering checks
+    '''
+    Method to generate all moves considering checks
+    '''
     def getValidMoves(self):
         # preserve original value of enpassantPossible before modification
         tempEnpassantPossible = self.enpassantPossible
@@ -186,7 +191,9 @@ class GameState():
         self.currentCastlingRights = tempCastleRights
         return moves
     
-    # method to determine if the current player is in check
+    '''
+    Method to determine if the current player is in check
+    '''
     def inCheck(self):
         # check if it is white's turn and the square of the white king is under attack
         if self.whiteToMove:
@@ -194,7 +201,9 @@ class GameState():
         else: # blacks turn
             return self.squareUnderAttack(self.blackKingLocation[0], self.blackKingLocation[1])
         
-    # method determine if the enemy can attack the square r, c
+    '''
+    Method determine if the enemy can attack the square r, c
+    '''
     def squareUnderAttack(self, r, c):
         self.whiteToMove = not self.whiteToMove # switch to opponent's turn
         oppMoves = self.getAllPossibleMoves() # generate all opponent moves
@@ -203,9 +212,10 @@ class GameState():
             if move.endRow == r and move.endCol == c: # square is under attack
                 return True
         return False
-        
 
-    # method to get all moves not considering checks
+    '''
+    Method to get all moves not considering checks
+    '''
     def getAllPossibleMoves(self):
         moves = []
         for r in range(len(self.board)): # iterate through rows
@@ -217,7 +227,9 @@ class GameState():
                     self.moveFunctions[piece](r, c, moves) #calls the appropriate move function based on piece type
         return moves
                 
-    # method to get all pawn moves for the pawn located at row, col and add them to the list
+    '''
+    Method to get all pawn moves for the pawn located at row, col and add them to the list
+    '''
     def getPawnMoves(self, r, c, moves):
         if self.whiteToMove: # white pawn moves
             if self.board[r-1][c] == '--': # 1 square pawn advance
@@ -252,7 +264,9 @@ class GameState():
                     moves.append(Move((r, c), (r+1, c+1), self.board, isEnpassantMove=True))
         # add pawn promotions later
 
-    # method to get all rook moves for the rook located at row, col and add them to the list
+    '''
+    Method to get all rook moves for the rook located at row, col and add them to the list
+    '''
     def getRookMoves(self, r, c, moves):
         directions = ((-1, 0), (0, -1), (1,0), (0, 1)) # define directions: up down left right
         enemyColor = 'b' if self.whiteToMove else 'w' # determine enemy colour based off current players turn
@@ -272,7 +286,9 @@ class GameState():
                 else: # off board; break
                     break
 
-    # method to get all knight moves for the knight located at row, col and add them to the list
+    '''
+    Method to get all knight moves for the knight located at row, col and add them to the list
+    '''
     def getKnightMoves(self, r, c, moves):
         knightMoves = ((-2, -1), (-2, 1), (-1, -2), (-1, 2),(1, -2), (1, 2), (2, -1), (2, 1)) # define directions
         allyColor = 'w' if self.whiteToMove else 'b' # determine ally colour based off current players turn
@@ -283,7 +299,10 @@ class GameState():
                 endPiece = self.board[endRow][endCol]
                 if endPiece[0] != allyColor: # not an ally piece
                     moves.append(Move((r, c), (endRow, endCol), self.board))
-    # method to get all bishop moves for the bishop located at row, col and add them to the list
+
+    '''
+    Method to get all bishop moves for the bishop located at row, col and add them to the list
+    '''
     def getBishopMoves(self, r, c, moves):
         directions = ((-1, -1), (-1, 1), (1,-1), (1, 1)) # define directions: 4 diagonals
         enemyColor = 'b' if self.whiteToMove else 'w' # determine enemy colour based off current players turn
@@ -302,13 +321,18 @@ class GameState():
                         break
                 else: # off board; break
                     break
-    # method to get all queen moves for the queen located at row, col and add them to the list
+
+    '''
+    Method to get all queen moves for the queen located at row, col and add them to the list
+    '''
     def getQueenMoves(self, r, c, moves):
         # a queen is just a bishop and rook put together
         self.getRookMoves(r, c, moves)
         self.getBishopMoves(r, c, moves)
 
-    # method to get all king moves for the king located at row, col and add them to the list
+    '''
+    Method to get all king moves for the king located at row, col and add them to the list
+    '''
     def getKingMoves(self, r, c, moves):
         kingMoves = ((-1, 0), (0, -1), (1,0), (0, 1), (-1, -1), (-1, 1), (1,-1), (1, 1)) #define directions: all 8
         allyColor = 'w' if self.whiteToMove else 'b'
@@ -320,7 +344,9 @@ class GameState():
                 if endPiece[0] != allyColor: # not an ally piece
                     moves.append(Move((r, c), (endRow, endCol), self.board))
 
-    # method to generate the valid castling moves for the king at row, col and add them to the list of moves
+    '''
+    Method to generate the valid castling moves for the king at row, col and add them to the list of moves
+    '''
     def getCastleMoves(self, r, c, moves):
         # 1) check if the king is in check
         if self.squareUnderAttack(r, c):
@@ -334,18 +360,25 @@ class GameState():
             (not self.whiteToMove and self.currentCastlingRights.bqs)):
             self.getQueensideCastleMoves(r, c, moves)
 
+    '''
+    Method to generate the possible king-side castling moves
+    '''
     def getKingsideCastleMoves(self, r, c, moves):
         if self.board[r][c+1] == '--' and self.board[r][c+2] == '--':
             if not self.squareUnderAttack(r, c+1) and not self.squareUnderAttack(r, c+2):
                 moves.append(Move((r, c), (r, c+2), self.board, isCastleMove = True))
 
+    '''
+    Method to generate the possible queen-side castling moves
+    '''
     def getQueensideCastleMoves(self, r, c, moves):
         if self.board[r][c-1] == '--' and self.board[r][c-2] == '--' and self.board[r][c-3] == '--':
             if not self.squareUnderAttack(r, c-1) and not self.squareUnderAttack(r, c-2):
                 moves.append(Move((r, c), (r, c-2), self.board, isCastleMove = True))
 
-
-    # method to get piece
+    '''
+    Method to get piece
+    '''
     def getPiece(self, row, col):
         return self.board[row][col]
 
@@ -400,19 +433,15 @@ class Move():
             return self.moveID == other.moveID
         return False
 
-    # method to get chess notation for a move
+    '''
+    Method to get chess notation for a move
+    '''
     def getChessNotation(self):
         # can add to make this like real chess notation
         return self.getRankFile(self.startRow, self.startCol) + self.getRankFile(self.endRow, self.endCol)
 
-    # method to convert row and column indices to chess notation
+    '''
+    Method to convert row and column indices to chess notation
+    '''
     def getRankFile(self, r, c):
         return self.colsToFiles[c] + self.rowstoRanks[r]
-
-
-
-
-
-
-
-

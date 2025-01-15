@@ -95,9 +95,9 @@ def main():
         if gs.checkMate:
             gameOver = True
             if gs.whiteToMove:
-                drawText(screen, 'You Lost!')
+                drawText(screen, 'You Lost Playa!')
             else:
-                drawText(screen, 'Well Played!')
+                drawText(screen, 'Well Played Playa!')
         elif gs.staleMate:
             gameOver = True
             drawText(screen, 'StaleMate')
@@ -121,7 +121,7 @@ def drawBoard(screen):
     for r in range(DIMENSION):
         for c in range(DIMENSION):
             color = colors[((r+c) % 2)] # alternate colours for each square
-            p.draw.rect(screen, color, p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            p.draw.rect(screen, color, p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE)) # draw square
 
 '''
 Draw pieces on the board using the current GameState.board
