@@ -29,7 +29,6 @@ def main():
     # the display
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
-
     # Show the start screen
     if not start_screen(screen):
         return  # Exit if the player quits from the start screen
@@ -100,9 +99,9 @@ def main():
         if gs.checkMate:
             gameOver = True
             if gs.whiteToMove:
-                drawText(screen, 'You Lost Playa!')
+                drawText(screen, 'Black Wins!')
             else:
-                drawText(screen, 'Well Played Playa!')
+                drawText(screen, 'White Wins!')
         elif gs.staleMate:
             gameOver = True
             drawText(screen, 'StaleMate')
@@ -115,25 +114,52 @@ Responsible for declaring the start screen
 def start_screen(screen):
     """Displays the start screen."""
     running = True
-    font = p.font.Font(None, 74)
-    title_text = font.render("Chess Game", True, p.Color("white"))
-    start_text = font.render("Press Enter to Start", True, p.Color("white"))
+    font_title = p.font.Font(None, 100)  # title font
+    font_subtitle = p.font.Font(None, 50)  # subtitle font
+    font_start = p.font.Font(None, 50)  # start font
+
+    title_text = font_title.render("Chess", True, p.Color("gold"))
+    subtitle_text = font_subtitle.render("by Torii Barnard", True, p.Color("gold"))
+    start_text = font_start.render("Press Enter to Start", True, p.Color("white"))
     clock = p.time.Clock()
 
+    # Load and scale the background image
+    background = p.image.load("images/startScreen.png")
+    background = p.transform.scale(background, (WIDTH, HEIGHT))
+
+    alpha = 0  # For fade-in effect
+    fade_in = True
+
     while running:
-        screen.fill(p.Color("black"))  # background color
-        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 3))
-        screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
+        screen.blit(background, (0, 0))  # display the background image
+
+        # display the title and subtitle
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 4))
+        screen.blit(subtitle_text, (WIDTH // 2 - subtitle_text.get_width() // 2, HEIGHT // 4 + 100))
+
+        # blinking text effect
+        if fade_in:
+            alpha += 5
+            if alpha >= 255:
+                fade_in = False
+        else:
+            alpha -= 5
+            if alpha <= 0:
+                fade_in = True
+        start_surface = font_start.render("Press Enter to Start", True, p.Color("gold"))
+        start_surface.set_alpha(alpha)
+        screen.blit(start_surface, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2 + 20))
+
         p.display.flip()
 
         for event in p.event.get():
             if event.type == p.QUIT:
                 running = False
-                return False  # exit the game
+                return False  # exit game
             if event.type == p.KEYDOWN and event.key == p.K_RETURN:
-                return True  # Start the game
+                return True  # start game
 
-        clock.tick(30)  # limit the frame rate
+        clock.tick(30)  # Limit the frame rate
 
 '''
 Responsible for all graphics within current gameState
