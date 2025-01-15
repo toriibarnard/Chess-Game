@@ -29,6 +29,11 @@ def main():
     # the display
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
+
+    # Show the start screen
+    if not start_screen(screen):
+        return  # Exit if the player quits from the start screen
+
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
     gs = ChessEngine.GameState()
@@ -104,6 +109,31 @@ def main():
 
         clock.tick(MAX_FPS) # limit framerate to max fps
         p.display.flip() # update display
+'''
+Responsible for declaring the start screen
+'''
+def start_screen(screen):
+    """Displays the start screen."""
+    running = True
+    font = p.font.Font(None, 74)
+    title_text = font.render("Chess Game", True, p.Color("white"))
+    start_text = font.render("Press Enter to Start", True, p.Color("white"))
+    clock = p.time.Clock()
+
+    while running:
+        screen.fill(p.Color("black"))  # background color
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 3))
+        screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
+        p.display.flip()
+
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                running = False
+                return False  # exit the game
+            if event.type == p.KEYDOWN and event.key == p.K_RETURN:
+                return True  # Start the game
+
+        clock.tick(30)  # limit the frame rate
 
 '''
 Responsible for all graphics within current gameState
