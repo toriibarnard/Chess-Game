@@ -8,7 +8,8 @@
 4. [Usage](#usage)
 5. [Screenshots](#screenshots)
 6. [Gameplay Instructions](#gameplay-instructions)
-7. [Technologies Used](#technologies-used)
+7. [Special Chess Moves](#special-chess-moves)
+8. [Technologies Used](#technologies-used)
 9. [Contributing](#contributing)
 
 ---
@@ -90,6 +91,23 @@ Once you run the ChessMain.py script, the Pygame window will open, displaying th
 3. **Game End**: The game ends when:
    - A checkmate occurs.
    - A draw is declared due to stalemate or insufficient material.
+
+---
+
+## Special Chess Moves
+
+#### In addition to the standard chess moves, this game also supports the following special moves:
+
+- **En Passant**:
+If a pawn moves two squares forward from its starting position and lands next to an opponent's pawn, the opponent's pawn can capture it as if it had only moved one square forward. This capture must be made immediately after the two-square move.
+
+
+- **Pawn Promotion**:
+When a pawn reaches the opponent's back rank (the 8th rank for white or the 1st rank for black), it can be promoted to any other piece (queen, rook, bishop, or knight), except a king. This promotion is triggered automatically when the pawn reaches the promotion square.
+
+
+- **Castling**:
+Castling is a move involving the king and either rook. To castle, the king and rook must not have moved previously, and the squares between them must be empty. The king moves two squares toward the rook, and the rook moves to the square next to the king on the opposite side. Castling can only occur if the king is not in check and does not move through or land on a square that is under attack.
 
 ---
 
