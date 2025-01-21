@@ -9,8 +9,9 @@
 5. [Screenshots](#screenshots)
 6. [Gameplay Instructions](#gameplay-instructions)
 7. [Special Chess Moves](#special-chess-moves)
-8. [Technologies Used](#technologies-used)
-9. [Contributing](#contributing)
+8. [Future Developments](#future-developments)
+9. [Technologies Used](#technologies-used)
+10. [Contributing](#contributing)
 
 ---
 
@@ -108,6 +109,12 @@ When a pawn reaches the opponent's back rank (the 8th rank for white or the 1st 
 
 - **Castling**:
 Castling is a move involving the king and either rook. To castle, the king and rook must not have moved previously, and the squares between them must be empty. The king moves two squares toward the rook, and the rook moves to the square next to the king on the opposite side. Castling can only occur if the king is not in check and does not move through or land on a square that is under attack.
+
+---
+
+## Future Developments
+
+- **AI Opponent**: In future updates, an AI opponent will be introduced. This AI will provide players the option to play against the computer, offering different difficulty levels and a more challenging gameplay experience. The AI will use a decision-making algorithm to evaluate board positions and choose optimal moves.
 
 ---
 
