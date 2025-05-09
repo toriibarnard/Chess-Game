@@ -49,7 +49,7 @@ To run the Chess game, you need to have Python and Pygame installed on your mach
 3. **Run the game**:
    Navigate to the directory containing the game files and run:
    ```bash
-   python ChessMain_modified.py
+   python ChessMain.py
    ```
 
 ---
