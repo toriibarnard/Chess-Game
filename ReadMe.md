@@ -56,7 +56,7 @@ To run the Chess game, you need to have Python and Pygame installed on your mach
 
 ## Usage
 
-Once you run the ChessMain_modified.py script, the Pygame window will open, displaying the start screen. You can choose to play against another player or against the AI.
+Once you run the ChessMain.py script, the Pygame window will open, displaying the start screen. You can choose to play against another player or against the AI.
 
 ### Game Mode Selection:
 1. **Press '1'**: To play Player vs. Player mode.
