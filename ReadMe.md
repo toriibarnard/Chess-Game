@@ -76,13 +76,13 @@ Once you run the ChessMain_modified.py script, the Pygame window will open, disp
 ## Screenshots
 
 ### Screenshot 1: Start Screen
-![Start Screen Screenshot](images/readMe/start.png)
+![Start Screen Screenshot](images/start.png)
 
 ### Screenshot 2: Game Start
-![Game Screenshot](images/readMe/game.png)
+![Game Screenshot](images/game.png)
 
 ### Screenshot 3: In-Game Play
-![Move Screenshot](images/readMe/move.png)
+![Move Screenshot](images/move.png)
 
 ---
 
