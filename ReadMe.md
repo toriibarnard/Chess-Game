@@ -1,4 +1,3 @@
-
 # Chess Game
 
 ## Table of Contents
@@ -9,23 +8,26 @@
 5. [Screenshots](#screenshots)
 6. [Gameplay Instructions](#gameplay-instructions)
 7. [Special Chess Moves](#special-chess-moves)
-8. [Future Developments](#future-developments)
-9. [Technologies Used](#technologies-used)
-10. [Contributing](#contributing)
+8. [AI Opponent](#ai-opponent)
+9. [Future Developments](#future-developments)
+10. [Technologies Used](#technologies-used)
+11. [Contributing](#contributing)
 
 ---
 
 ## Introduction
-This Chess Game is a Python-based implementation that allows two players to play chess against each other in a player vs. player (PvP) format. The game is built using Pygame, providing a graphical user interface (GUI) for players to interact with. The game engine processes moves, manages the game state, and ensures the rules of chess are followed. Players make moves by interacting with the GUI rather than typing commands in the terminal.
+This Chess Game is a Python-based implementation that allows players to enjoy chess either against another player (PvP) or against an AI opponent. The game is built using Pygame, providing a graphical user interface (GUI) for players to interact with. The game engine processes moves, manages the game state, and ensures the rules of chess are followed. Players make moves by interacting with the GUI rather than typing commands in the terminal.
 
 ---
 
 ## Features
 - **Player vs. Player (PvP)**: Allows two players to play against each other on the same device.
+- **Player vs. AI**: Challenge yourself against a computer opponent using the Negamax algorithm with Alpha-Beta pruning.
 - **Graphical User Interface**: The game features a user-friendly interface built using Pygame for easy interaction.
 - **Move validation**: Ensures that all moves follow chess rules.
 - **Undo**: Players can undo moves during the game by pressing 'z'.
-- **Reset**: Players can reset the game by pressing 'r'
+- **Reset**: Players can reset the game by pressing 'r'.
+- **Return to Menu**: After a game ends, press 'm' to return to the start screen.
 - **Game state tracking**: Tracks the state of the game, including check, checkmate, and stalemate.
 - **Customizable controls**: Players can interact with the chessboard using simple mouse clicks.
 ---
@@ -47,34 +49,40 @@ To run the Chess game, you need to have Python and Pygame installed on your mach
 3. **Run the game**:
    Navigate to the directory containing the game files and run:
    ```bash
-   python ChessMain.py
+   python ChessMain_modified.py
    ```
 
 ---
 
 ## Usage
 
-Once you run the ChessMain.py script, the Pygame window will open, displaying the chessboard and allowing two players to interact with it. Players take turns to move pieces on the board by clicking on pieces and squares.
+Once you run the ChessMain_modified.py script, the Pygame window will open, displaying the start screen. You can choose to play against another player or against the AI.
+
+### Game Mode Selection:
+1. **Press '1'**: To play Player vs. Player mode.
+2. **Press '2'**: To play against the AI (you'll play as White).
 
 ### Example Move:
-1. **Select a piece**: Player 1 clicks on a piece to select it.
-2. **Move a piece**: Player 1 clicks on the destination square to move the piece.
-3. **Switch turns**: Player 2 repeats the same process on their turn.
-4. **Undo a move**: Click 'z' on your keyboard to undo the last move.
-5. **Exit**: Close the Pygame window to end the game session, or click 'r' on your keyboard to reset the game.
+1. **Select a piece**: Click on a piece to select it.
+2. **Move a piece**: Click on a highlighted destination square to move the piece.
+3. **Switch turns**: In PvP mode, the other player repeats the same process. In AI mode, the computer will automatically make its move.
+4. **Undo a move**: Press 'z' on your keyboard to undo the last move.
+5. **Reset the game**: Press 'r' on your keyboard to reset the board.
+6. **Return to menu**: After a game ends, press 'm' to return to the start screen.
+7. **Exit**: Close the Pygame window to end the game session.
 
 ---
 
 ## Screenshots
 
 ### Screenshot 1: Start Screen
-![Start Screen Screenshot](images/start.png)
+![Start Screen Screenshot](images/readMe/start.png)
 
 ### Screenshot 2: Game Start
-![Game Screenshot](images/game.png)
+![Game Screenshot](images/readMe/game.png)
 
 ### Screenshot 3: In-Game Play
-![Move Screenshot](images/move.png)
+![Move Screenshot](images/readMe/move.png)
 
 ---
 
@@ -112,15 +120,48 @@ Castling is a move involving the king and either rook. To castle, the king and r
 
 ---
 
+## AI Opponent
+
+The game now features an AI opponent that uses advanced chess algorithms to provide a challenging experience:
+
+### AI Implementation Details:
+
+- **Negamax Algorithm**: A variant of the minimax algorithm that simplifies implementation by using the fact that max(a, b) = -min(-a, -b) in zero-sum games like chess.
+
+- **Alpha-Beta Pruning**: An optimization technique that significantly reduces the number of board positions evaluated by the AI by "pruning" branches that cannot influence the final decision.
+
+- **Position Evaluation**: The AI evaluates chess positions using several factors:
+  - **Material Value**: Each piece has a standard value (pawn=10, knight=30, bishop=30, rook=50, queen=90, king=900)
+  - **Piece Position Tables**: Each piece type has a position table that assigns values to different squares on the board
+  - **Mobility**: Considers the number of legal moves available
+  - **Game Phase Detection**: Adjusts strategy based on whether the game is in an opening, middle, or endgame phase
+
+- **Search Depth**: The default search depth is set to 3, which provides a balance between performance and strength. This means the AI looks ahead 3 moves (considering both player and AI moves).
+
+### Playing Against the AI:
+
+1. Select "Player vs AI" (press '2') on the start screen
+2. You will play as White, and the AI will play as Black
+3. When it's the AI's turn, you'll see "AI thinking..." displayed, and then the AI will make its move
+4. If you press 'z' to undo a move, the game will undo both your move and the AI's move
+
+---
+
 ## Future Developments
 
-- **AI Opponent**: In future updates, an AI opponent will be introduced. This AI will provide players the option to play against the computer, offering different difficulty levels and a more challenging gameplay experience. The AI will use a decision-making algorithm to evaluate board positions and choose optimal moves.
+- **AI Difficulty Levels**: Implement easy, medium, and hard AI difficulty settings for players of different skill levels.
+- **Opening Book**: Add pre-programmed openings to improve the AI's early game play.
+- **Time Controls**: Implement chess clocks and various time control options.
+- **Online Multiplayer**: Allow players to compete against each other over the internet.
+- **Save/Load Games**: Ability to save games in progress and load them later.
 
 ---
 
 ## Technologies Used
 - **Python**: Programming language used for the development of the game.
 - **Pygame**: Library used to build the graphical user interface (GUI) for the chessboard and gameplay.
+- **Negamax Algorithm**: Used for the AI's decision-making process.
+- **Alpha-Beta Pruning**: Optimization technique for the AI's search algorithm.
 
 ---
 
